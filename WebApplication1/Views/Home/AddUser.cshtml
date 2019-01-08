@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "AddUser";
+}
+
+<h2>Add User</h2>
+
+<br /><br />
+
+<form action='AddUser' method='POST' align="left">
+    Username: <input type="text" name="username" /> <br /><br />
+    Email: <input type="email" name="email" /><br /><br />
+    Password: <input type="password" name="password" /><br /><br />
+    Verify Password: <input type="password" name="verify" /><br /><br /><br />
+    <input type="submit" value="Submit" /><br /><br />
+
+</form>
+
+@ViewBag.error<br /><br />
+<div asp-validation-summary="All"></div>
+
