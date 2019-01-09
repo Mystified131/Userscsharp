@@ -52,8 +52,10 @@ namespace WebApplication1.Controllers
 
                     }
 
-                    Hashobject newhash = new Hashobject(addUserViewModel.password);
-                    string Hash = newhash.Hashedstring(addUserViewModel.password);
+                    string passobj = "cheese" + addUserViewModel.password;
+
+                    Hashobject newhash = new Hashobject(passobj);
+                    string Hash = newhash.Hashedstring(passobj);
 
                     User newuser = new User(addUserViewModel.username, addUserViewModel.email, Hash);
 
@@ -104,8 +106,10 @@ namespace WebApplication1.Controllers
             {
                 List<User> matches1 = context.Members.Where(c => c.Username == loginViewModel.username).ToList();
 
-                Hashobject newhash = new Hashobject(loginViewModel.password);
-                string Hash = newhash.Hashedstring(loginViewModel.password);
+                string passobj = "cheese" + loginViewModel.password;
+
+                Hashobject newhash = new Hashobject(passobj);
+                string Hash = newhash.Hashedstring(passobj);
 
                 List<User> matches2 = matches1.Where(c => c.Password == Hash).ToList();
 
