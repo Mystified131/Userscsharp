@@ -40,24 +40,24 @@ namespace WebApplication1.Controllers
 
                 if (addUserViewModel.verify == addUserViewModel.password)
                 {
-                    List<User> TheList = context.Members.ToList();
-                    //foreach (User user in TheList)
-                    //{
-                        //if (user.Email == addUserViewModel.email)
-                       // {
-                            //ViewBag.error = "That email is already in our system.";
-                           // return View();
 
-                        //}
+                    List<User> matches = context.Members.Where(c => c.Email == addUserViewModel.email).ToList();
 
-                    //}
+                    if (matches.Count > 0)
+
+                    {
+
+                        ViewBag.error = "That email is already in our system.";
+                        return View();
+
+                    }
 
                     Hashobject newhash = new Hashobject(addUserViewModel.password);
                     string Hash = newhash.Hashedstring(addUserViewModel.password);
 
                     User newuser = new User(addUserViewModel.username, addUserViewModel.email, Hash);
 
-                    TheList.Add(newuser);
+                    context.Members.Add(newuser);
                     context.SaveChanges();
                     return Redirect("/Home/Registered");
 
@@ -89,6 +89,52 @@ namespace WebApplication1.Controllers
 
             ViewBag.userslist = TheList;
 
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginViewModel loginViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                List<User> matches1 = context.Members.Where(c => c.Username == loginViewModel.username).ToList();
+
+                Hashobject newhash = new Hashobject(loginViewModel.password);
+                string Hash = newhash.Hashedstring(loginViewModel.password);
+
+                List<User> matches2 = matches1.Where(c => c.Password == Hash).ToList();
+
+                if (matches2.Count == 1)
+                {
+
+                    return Redirect("/Home/LoggedIn");
+                }
+
+                else
+                {
+                    ViewBag.error = "No such user found in database. Feel free to register.";
+                    return View();
+                }
+               
+
+                }
+
+            else
+            {
+
+                return View();
+
+            }
+
+        }
+
+        public IActionResult LoggedIn()
+        {
             return View();
         }
     }
