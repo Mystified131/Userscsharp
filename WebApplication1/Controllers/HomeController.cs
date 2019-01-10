@@ -13,6 +13,8 @@ namespace WebApplication1.Controllers
     public class HomeController : Controller
     {
         public static string Loggedin;
+        public static string Modelvalid;
+        public static User currentuser = new User("username", "email", "password");
 
         private readonly ApplicationDbContext context;
 
@@ -23,7 +25,10 @@ namespace WebApplication1.Controllers
 
         public IActionResult Index()
         {
-            if(Loggedin == "true")
+            //User currentuser = new User("username", "email", "password");
+            int currentstate = currentuser.State(Loggedin, "");
+
+            if(currentstate == 1)
             {
                 ViewBag.session = "true";
 
@@ -39,12 +44,28 @@ namespace WebApplication1.Controllers
 
         public IActionResult AddUser()
         {
-            return View();
+            //User currentuser = new User("username", "email", "password");
+            int currentstate = currentuser.State(Loggedin, "");
+
+        if(currentstate == 1)
+            {
+
+                return Redirect("/");
+            }
+
+            else
+            {
+                
+                return View();
+
+            }
         }
 
         [HttpPost]
         public IActionResult AddUser(AddUserViewModel addUserViewModel)
         {
+           
+
             if (ModelState.IsValid)
             {
 
@@ -71,6 +92,7 @@ namespace WebApplication1.Controllers
 
                     User newuser = new User(addUserViewModel.username, addUserViewModel.email, Hash);
 
+                    currentuser = newuser;
                     context.Members.Add(newuser);
                     context.SaveChanges();
                     Loggedin = "true";
@@ -141,6 +163,8 @@ namespace WebApplication1.Controllers
 
                 if (matches2.Count == 1)
                 {
+                    User logusr = matches1.Single(c => c.Password == Hash);
+                    currentuser = logusr;
                     Loggedin = "true";
                     return Redirect("/Home/LoggedIn");
                 }

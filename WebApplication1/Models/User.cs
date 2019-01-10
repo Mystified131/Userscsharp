@@ -18,5 +18,26 @@ namespace WebApplication1.Models
             Email = email;
             Password = password;
         }
+
+        public int State (string Loggedin, string Modelvalid)
+        {
+            int Stateval = 0;
+            if(Loggedin == "true")
+            {
+
+                Stateval += 1;
+            
+            }
+
+            if (Modelvalid == "true")
+            {
+
+                Stateval += 1;
+
+            }
+
+            return Stateval;
+
+        }
     }
 }
