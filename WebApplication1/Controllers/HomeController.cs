@@ -12,6 +12,7 @@ namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
+        public static string Loggedin;
 
         private readonly ApplicationDbContext context;
 
@@ -22,6 +23,17 @@ namespace WebApplication1.Controllers
 
         public IActionResult Index()
         {
+            if(Loggedin == "true")
+            {
+                ViewBag.session = "true";
+
+            }
+
+            else
+            {
+                ViewBag.session = "false";
+
+            }
             return View();
         }
 
@@ -61,6 +73,7 @@ namespace WebApplication1.Controllers
 
                     context.Members.Add(newuser);
                     context.SaveChanges();
+                    Loggedin = "true";
                     return Redirect("/Home/Registered");
 
                 }
@@ -84,9 +97,22 @@ namespace WebApplication1.Controllers
             return View();
         }
 
+        public IActionResult Logout()
+        {
+            Loggedin = "";
+            return Redirect("/");
+        }
+
 
         public IActionResult Userlist()
-        {
+       {
+            if(Loggedin != "true")
+            {
+
+                return Redirect("/");
+
+            }
+
             List<User> TheList = context.Members.ToList();
 
             ViewBag.userslist = TheList;
@@ -115,7 +141,7 @@ namespace WebApplication1.Controllers
 
                 if (matches2.Count == 1)
                 {
-
+                    Loggedin = "true";
                     return Redirect("/Home/LoggedIn");
                 }
 
