@@ -73,6 +73,43 @@ namespace WebApplication1.Controllers
 
                 if (addUserViewModel.verify == addUserViewModel.password)
                 {
+                    int pwlen = addUserViewModel.password.Length;
+                    
+                    if (pwlen < 9)
+
+
+                    {
+
+                        ViewBag.error = "The password must be longer than 8 characters.";
+                        return View();
+
+                    }
+
+                    String pwtest = addUserViewModel.password;
+
+                    var withoutSpecial = new string(pwtest.Where(c => Char.IsLetterOrDigit(c)
+                                            || Char.IsWhiteSpace(c)).ToArray());
+
+
+                    if (pwtest.Any(char.IsUpper) &&
+                        pwtest.Any(char.IsLower) &&
+                        pwtest.Any(char.IsDigit) &&
+                        pwtest != withoutSpecial)
+
+          
+                    {
+                        //password clears character test
+                    }
+
+                    else
+
+                    {
+                        ViewBag.error = "Your password must contain upper and lowercase letters, numbers and special characters.";
+                        return View();
+
+                    }
+
+
 
                     List<User> matches = context.Members.Where(c => c.Email == addUserViewModel.email).ToList();
 
