@@ -98,7 +98,7 @@ namespace WebApplication1.Controllers
 
           
                     {
-                        //password clears character test
+                        //password clears complexity test
                     }
 
                     else
