@@ -18,28 +18,25 @@
 </head>
 
     <body>
-        <div class="jumbotron">
-            <p>
+        <div class="jumbotron" align ="center">
+            <h1>Hussmann / CPQ</h1>
+            <h2>Application Portal</h2>
+            <br /><br />
 
+                <h4>
+                    <a asp-area="" asp-controller="Home" asp-action="Login">  Log In  </a><br />
+                    <a asp-area="" asp-controller="Home" asp-action="Logout">  Log Out  </a><br />
+                    <a asp-area="" asp-controller="Home" asp-action="AddUser">  Register </a><br />
 
-                <h2>
-                    <a asp-area="" asp-controller="Home" asp-action="Index">  Home  </a>
-                    <a asp-area="" asp-controller="Home" asp-action="Login">  Log In  </a>
-                    <a asp-area="" asp-controller="Home" asp-action="Logout">  Log Out  </a>
-                    <a asp-area="" asp-controller="Home" asp-action="AddUser">  Register </a>
-                    <a asp-area="" asp-controller="Home" asp-action="Userlist">  User List  </a>
-                </h2>
+                </h4>
         </div>
    
-      
-
-        <partial name="_CookieConsentPartial" />
 
         <div class="container body-content">
             @RenderBody()
             <hr />
             <footer>
-                <p>&copy; 2019 - WebApplication1</p>
+                <p align = center>&copy; 2019 - Hussmann Corporation</p>
             </footer>
         </div>
 
